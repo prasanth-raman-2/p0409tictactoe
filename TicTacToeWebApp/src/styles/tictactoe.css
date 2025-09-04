@@ -1,0 +1,124 @@
+:root {
+  --cell-size: 110px;
+  --cell-gap: 8px;
+}
+
+@media (max-width: 480px) {
+  :root { --cell-size: 88px; --cell-gap: 6px; }
+}
+
+.game-status {
+  min-height: 28px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.game-status .badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  margin-left: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.game-status .winner {
+  color: #10b981;
+  border-color: rgba(16,185,129,0.35);
+}
+.game-status .draw {
+  color: #f59e0b;
+  border-color: rgba(245,158,11,0.35);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: var(--cell-gap);
+  margin: 10px 0 4px;
+}
+
+.cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  font-size: calc(var(--cell-size) * 0.5);
+  font-weight: 800;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+.cell:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.cell[data-value="X"] { color: #e63946; }
+.cell[data-value="O"] { color: #457b9d; }
+
+.cell.winning {
+  background: rgba(76, 175, 80, 0.12);
+  border-color: rgba(76, 175, 80, 0.6);
+}
+
+.cell[disabled] {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.live-region {
+  position: absolute;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
