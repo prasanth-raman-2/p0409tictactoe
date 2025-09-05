@@ -1,82 +1,66 @@
-# Lightweight React Template for KAVIA
+# TicTacToeWebApp
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+An accessible, responsive, and minimalistic Tic Tac Toe application built with React. This app implements robust game logic, ARIA-friendly UI, keyboard navigation, win/draw detection, reset with confirmation, and testing hooks for Cypress.
 
-## Features
+## Highlights
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Responsive 3x3 grid board with clear boundaries
+- Mouse, touch, and full keyboard interaction (arrows to move, Enter/Space to play)
+- Immediate mark placement, turn alternation, win/draw detection
+- Prevents invalid actions (occupied cell, after game end) with subtle feedback
+- Prominent Reset with confirmation (prevents accidental reset)
+- Accessible: roles, labels, aria-live announcements, visible focus indicators
+- Minimalistic, theme-aware UI (light/dark)
+- Cypress test hooks (data-cy) and unit tests
+- SOLID-friendly modular architecture; ready for AI/multiplayer extensions
 
 ## Getting Started
 
-In the project directory, you can run:
+- `npm start` — Run development server
+- `npm test` — Run unit tests
+- `npm run build` — Create production build
 
-### `npm start`
+Open http://localhost:3000 in your browser.
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Architecture
 
-### `npm test`
+- src/engine/GameEngine.js — Pure game logic (win/draw, applyMove, next player)
+- src/state/GameContext.js — Centralized state with reducer to avoid race conditions
+- src/game/TicTacToeGame.js — UI components (board, status, controls) with ARIA/keyboard support
+- src/hooks/usePrefersColorScheme.js — Sets initial theme based on user preference
+- src/App.js — Root component wiring provider and theme toggle
 
-Launches the test runner in interactive watch mode.
+Extension points:
+- Add AI: create a player module to compute next move and dispatch play(index)
+- Add multiplayer: replace play action to sync with remote peer or server
 
-### `npm run build`
+## Accessibility
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Board uses role="grid", cells role="gridcell" with row/col indices
+- aria-live regions announce status updates and outcomes
+- Keyboard: arrow keys navigate cells; Enter/Space to place mark
+- Visible focus outlines and non-color-only cues
 
-## Customization
+## Cypress
 
-### Colors
+The UI includes data-cy attributes:
+- `data-cy="board"`
+- `data-cy="cell-<index>"`
+- `data-cy="status"`
+- `data-cy="reset-btn"`
+- `data-cy="reset-confirm"`, `data-cy="reset-confirm-yes"`, `data-cy="reset-confirm-no"`
+- `data-cy="toggle-theme"`
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+Integrate Cypress in your pipeline to run E2E and accessibility tests.
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+## Deployment
 
-### Components
+This is a static SPA and can be deployed on Netlify, Vercel, GitHub Pages or any static host:
+- Build using `npm run build`
+- Serve the `build/` directory
+- Use relative asset paths (default CRA settings are compatible)
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+## Notes
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The code is organized for maintainability and future feature additions.
+- No backend integration is required for current functionality.

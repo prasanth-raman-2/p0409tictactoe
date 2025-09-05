@@ -1,47 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { TicTacToeGame } from './game/TicTacToeGame';
+import { GameProvider } from './state/GameContext';
+import { usePrefersColorScheme } from './hooks/usePrefersColorScheme';
 
-// PUBLIC_INTERFACE
+/**
+ * App is the root component that wires providers and global theme handling.
+ * It renders the TicTacToeGame screen within the GameProvider.
+ */
 function App() {
-  const [theme, setTheme] = useState('light');
+  const prefersDark = usePrefersColorScheme();
+  const [theme, setTheme] = useState(prefersDark ? 'dark' : 'light');
 
-  // Effect to apply theme to document element
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setTheme(t => (t === 'light' ? 'dark' : 'light'));
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="App" data-testid="app-root">
+      <header className="app-header">
+        <nav className="navbar" aria-label="Main">
+          <div className="brand">
+            <span aria-hidden="true">⭕️❌</span>
+            <span className="brand-text">Tic Tac Toe</span>
+          </div>
+          <div className="nav-actions">
+            <button
+              className="btn theme-toggle"
+              onClick={toggleTheme}
+              aria-pressed={theme === 'dark'}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              data-cy="toggle-theme"
+            >
+              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+            </button>
+          </div>
+        </nav>
       </header>
+
+      <main className="container" id="main" tabIndex={-1}>
+        <GameProvider>
+          <TicTacToeGame />
+        </GameProvider>
+      </main>
+
+      <footer className="footer" aria-label="Footer">
+        <p className="sr-only" aria-live="polite">
+          Theme is {theme} mode
+        </p>
+      </footer>
     </div>
   );
 }
