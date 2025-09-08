@@ -1,46 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import TicTacToeGame from './tictactoe/TicTacToeGame';
 
-// PUBLIC_INTERFACE
+/**
+ * App serves as the shell hosting the TicTacToeGame.
+ * It also provides a simple theme toggle retained from the template.
+ */
 function App() {
   const [theme, setTheme] = useState('light');
 
-  // Effect to apply theme to document element
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   // PUBLIC_INTERFACE
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    /** Toggle between light and dark theme; accessible label is applied on the button. */
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return (
-    <div className="App">
+    <div className="App" data-testid="app-root">
       <header className="App-header">
-        <button 
-          className="theme-toggle" 
+        <button
+          className="theme-toggle"
           onClick={toggleTheme}
           aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          data-testid="btn-theme-toggle"
         >
           {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
         </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <TicTacToeGame />
       </header>
     </div>
   );
