@@ -1,0 +1,239 @@
+:root {
+  --ttt-max-size: min(90vmin, 480px);
+  --ttt-gap: 8px;
+  --ttt-border: #d0d7de;
+  --ttt-border-dark: #4b5563;
+
+  --ttt-focus: #0ea5e9; /* cyan-500 */
+  --ttt-hover: #94a3b8; /* slate-400 */
+
+  --ttt-x: #ef4444; /* red-500 */
+  --ttt-o: #22c55e; /* green-500 */
+
+  --ttt-text: var(--text-primary, #111827);
+  --ttt-bg: var(--bg-primary, #ffffff);
+
+  --ttt-error-bg: #fee2e2;
+  --ttt-error-text: #991b1b;
+
+  --ttt-btn-bg: #111827;
+  --ttt-btn-text: #ffffff;
+  --ttt-btn-hover: #374151;
+}
+
+[data-theme="dark"] {
+  --ttt-border: var(--border-color, #404040);
+  --ttt-text: var(--text-primary, #ffffff);
+  --ttt-bg: var(--bg-primary, #1a1a1a);
+  --ttt-btn-bg: #e5e7eb;
+  --ttt-btn-text: #111827;
+  --ttt-btn-hover: #cbd5e1;
+}
+
+.ttt-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 24px 16px 56px;
+  color: var(--ttt-text);
+}
+
+.ttt-content {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.ttt-title {
+  font-size: clamp(24px, 2.5vw, 36px);
+  margin: 0 0 8px 0;
+}
+
+.ttt-status {
+  width: 100%;
+  max-width: 640px;
+}
+
+.status-line {
+  padding: 8px 12px;
+  border: 1px solid var(--ttt-border);
+  border-radius: 8px;
+  background: var(--ttt-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.status-label {
+  font-weight: 600;
+}
+
+.error-banner {
+  margin-top: 12px;
+  border: 1px solid var(--ttt-error-text);
+  background: var(--ttt-error-bg);
+  color: var(--ttt-error-text);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error-text {
+  margin-right: 12px;
+}
+
+.error-dismiss {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ttt-board-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.ttt-board {
+  width: var(--ttt-max-size);
+  height: var(--ttt-max-size);
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 1fr;
+  gap: var(--ttt-gap);
+}
+
+.ttt-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ttt-gap);
+}
+
+.ttt-gridcell {
+  display: flex;
+}
+
+.ttt-cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 2px solid var(--ttt-border);
+  border-radius: 8px;
+  background: var(--ttt-bg);
+  font-size: clamp(32px, 10vmin, 72px);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .08s ease, border-color .15s ease, box-shadow .15s ease;
+  outline: none;
+  position: relative;
+}
+
+.ttt-cell:hover:not(:disabled) {
+  border-color: var(--ttt-hover);
+}
+
+.ttt-cell:focus-visible {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ttt-focus) 35%, transparent);
+  border-color: var(--ttt-focus);
+}
+
+.ttt-cell:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.ttt-cell.occupied {
+  cursor: not-allowed;
+  opacity: 0.95;
+}
+
+.mark {
+  display: inline-block;
+  transform: translateZ(0);
+}
+
+.mark-x {
+  color: var(--ttt-x);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.05);
+}
+
+.mark-o {
+  color: var(--ttt-o);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.05);
+}
+
+.ttt-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-reset,
+.btn-confirm,
+.btn-cancel {
+  min-width: 140px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--ttt-border);
+  background: var(--ttt-btn-bg);
+  color: var(--ttt-btn-text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, transform .08s ease;
+}
+
+.btn-reset:hover,
+.btn-confirm:hover,
+.btn-cancel:hover {
+  background: var(--ttt-btn-hover);
+}
+
+.btn-reset:active,
+.btn-confirm:active,
+.btn-cancel:active {
+  transform: translateY(1px);
+}
+
+.confirm-reset {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.confirm-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.ttt-instructions {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: color-mix(in srgb, var(--ttt-text) 75%, transparent);
+  text-align: center;
+}
+
+ul {
+  padding-left: 1.2rem;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
